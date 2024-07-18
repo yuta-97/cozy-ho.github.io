@@ -26,7 +26,7 @@ description: >- # used by seo meta and the atom feed
 url: "https://cozy-ho.github.io"
 
 github:
-  username: github_username # change to your GitHub username
+  username: cozy-ho # change to your GitHub username
 
 social:
   # Change to your full name.
@@ -83,7 +83,7 @@ pageviews:
 #     light — Use the light color scheme
 #     dark — Use the dark color scheme
 #
-theme_mode: dark
+theme_mode: # dark
 
 # The CDN endpoint for media resources.
 # Notice that once it is assigned, the CDN url
