@@ -12,10 +12,9 @@ category: Server
 ---
 
 > 해당 글은 이전에 작성했던 포스트 <a href="https://cozy-ho.github.io/server/2021/07/19/Nodejs%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider.html" target="_blank">Node.js로 OAuth 인증서버 만들기</a> 에 의존합니다.
+{: .prompt-warning }
 
-# Intro
-
-<br>
+## Intro
 기본적인 개념 및 구조는 해당 포스트를 참고 하도록 하고, 여기에는 `typescript` 그리고 `Nest.js`를 사용해서 구현하는 것을 목표로 잡았다.
 
 Typescript와 Nestjs 기초 지식이 있다고 생각하고 작성하겠다.
@@ -31,21 +30,22 @@ Typescript와 Nestjs 기초 지식이 있다고 생각하고 작성하겠다.
 글보다 코드가 더 익숙하다면, [여기](https://github.com/rkdwn/auth) 를 참고하면 된다.
 개인적으로 만들어 둔 인증서버인데 해당 코드를 기준으로 설명 하려 한다.
 
-# ~~주의사항~~
-
-1. 나는 Nestjs 잘 모른다(?) 찍먹만 해봤다.
-2. 그래서 코드 구조라던가, 모듈 구조가 이상해 보일 수 있다.
-3. 각자 입맛에 맞게 리팩토링하거나 기본 동작 구조만 이해하고 처음부터 구축하는 걸 추천한다.
-4. 최대한 정확하게 작성하려 하겠지만 잘못 된 정보가 있을 수 있다.
-5. 해당 글의 작성일은 2023년 상반기 이다. 최신 정보가 반영되어 있지 않거나, 최신 버전에서는 동작 방식이 달라 질 수 있다.
+> 1. 나는 Nestjs 잘 모른다(?) 찍먹만 해봤다.
+> 2. 그래서 코드 구조라던가, 모듈 구조가 이상해 보일 수 있다.
+> 3. 각자 입맛에 맞게 리팩토링하거나 기본 동작 구조만 이해하고 처음부터 구축하는 걸 추천한다.
+> 4. 최대한 정확하게 작성하려 하겠지만 잘못 된 정보가 있을 수 있다.
+> 5. 해당 글의 작성일은 2023년 상반기 이다. 최신 정보가 반영되어 있지 않거나, 최신 버전에서는 동작 방식이 달라 질 수 있다.
+{: .prompt-info }
 
 ---
 
-# 사전준비
+## 사전준비
 
 우선 기본적인 Nest 앱 부터 만든다.
 
-> $ npx create-next-app@latest --typescript
+```console
+npx create-next-app@latest --typescript
+```
 
 취향껏 `tsconfig.json`도 커스텀 해준다.
 
@@ -81,7 +81,7 @@ Typescript와 Nestjs 기초 지식이 있다고 생각하고 작성하겠다.
 }
 ```
 
-기본적으로 설치된 npm 모듈 이외에 추가한 것들도 있는데, git 링크 내 package.json 을 참고 하면 된다.
+기본적으로 설치된 npm 모듈 이외에 추가한 것들도 있는데, git 링크 내 `package.json` 을 참고 하면 된다.
 
 ```
 cors
@@ -98,7 +98,7 @@ reflect-metadata
 
 ---
 
-# 시작
+## 시작
 
 폴더 구조는 다음과 같이 잡았다.
 
@@ -106,16 +106,16 @@ reflect-metadata
 
 앞서 말했지만 디렉토리 구조는 변경해도 무방하다.
 
-> common
+### common
 
 해당 폴더 안에 `Adapter`에서 공통으로 사용 될 `entity` 를 정의한다.
 `Adapter`에 사용되는 entity의 구조가 거의 비슷해서 공통으로 뺐다.
 
-> config
+### config
 
 각종 설정파일 및 설정 데이터를 모아뒀다. OIDC 설정, mongoose 설정 등등
 
-> modules
+### modules
 
 nest 앱에 import 할 모듈들. 기본적으로 4개의 모듈로 만들었다.
 `account`는 사용자에 관련된 기능이 들어있다. 사용자 조회(로그인) 사용자 검증(비밀번호검증) 동작을 수행한다.
@@ -127,12 +127,12 @@ nest 앱에 import 할 모듈들. 기본적으로 4개의 모듈로 만들었다
 
 `user` 모듈은 각 서비스별로 존재하는 사용자 정보에 관한 모듈이다. 인증서버를 통해 로그인처리를 할 때 사용할 사용자정보.
 
-> views
+### views
 
 ejs 템플릿을 사용해서 구현했기 때문에, ejs 파일들이 위치하고 있다. 로그인 페이지, 비밀번호 변경 페이지 등 필요한 화면들을 관리한다.
 
----
 
+### Adapter
 여기서 중요한 부분은 `Adapter` 인데, 이 친구가 하는 역할은 인증서버의 꽤 중요한 부분을 차지한다.
 기본으로 적용되어있는 `Adapter`의 경우 `In-memory Cache`를 사용해 구현되어있어 사용자 인증 정보, 로그인 데이터 등의 정보들이 휘발성이다.
 
@@ -141,9 +141,7 @@ ejs 템플릿을 사용해서 구현했기 때문에, ejs 파일들이 위치하
 
 oidc-provider 에서 문서로 [작성된 예시](https://github.com/panva/node-oidc-provider/blob/v7.x/example/my_adapter.js)가 있다.
 
-~~링크 보기 귀찮을까봐 준비한~~
-
-```js
+```javascript
 /* eslint-disable */
 "use strict";
 
@@ -191,9 +189,11 @@ module.exports = MyAdapter;
 
 ---
 
-# Pain point
+## Pain point
 
-사실 이전에 js로 구현한 것과 기능상의 차이는 별로 없다.~~(v6.0 에서 v7.0으로 오면서 보안상 clientCredentials 를 제외한 방식에서 access-token 형식에 jwt 사용을 못하게 되었다던가..)~~
+사실 이전에 js로 구현한 것과 기능상의 차이는 별로 없다.
+
+> v6.0 에서 v7.0으로 오면서 보안상 clientCredentials 를 제외한 방식에서 access-token 형식에 jwt 사용을 못하게 되었다던가..
 
 타입 정의가 추가되고, Nest를 사용했다는 것. 사실 이 부분때문에 고생을 좀 한 부분이 있다.
 아직까지 마음에 들진 않지만 다른 대안이 떠오르지 않아 이런식으로 구현을 헀으니, ~~고수분들.. 좀 도와 주십쇼..~~
@@ -202,11 +202,12 @@ module.exports = MyAdapter;
 
 Nest 답게 의존성을 주입받아 사용해야 한다. `name`값이 동적으로 주어지기 때문에 사용 할 모델 또한 동적으로 주입해야 하는데, Nest에서 모델을 주입받기 위해서는 생성자에 정의되어야한다. 하지만 우리는 생성자의 파라미터가 인터페이스(name: string)로 고정되어있기 때문에 이 부분을 해결하기 쉽지않았다.
 
-## 이것저것 시도 해 보다 해결한 방법
+### 이것저것 시도 해 보다 해결한 방법
 
 우선 우리는 동적으로 모델을 주입받아야 하기 때문에 `oidc-provider`에서 원하는 인터페이스를 맞추기 어렵다. 그래서 기존 `Adapter`의 구현체 `CustomAdapter`를 생성해서 사용 하도록 하겠다.
 
-```ts
+#### Custom Adapter
+```typescript
 import { BaseAdapterEntityDocument } from "@/common/base.adapter.entity";
 import { Injectable } from "@nestjs/common";
 import { Model } from "mongoose";
@@ -305,7 +306,9 @@ export class CustomAdapter implements Adapter {
 
 다음으로 oidc 모듈에 관련 설정을 살펴보자.
 
-```ts
+#### OIDC Module
+
+```typescript
 import { OidcConfigs } from "@/config/oidc-config.service";
 
 // import 생략...
@@ -356,6 +359,7 @@ export class OidcModule {}
 
 Nest의 `useFactory` 를 사용해 필요한 모듈 및 서비스를 주입받아 인증서버 설정값들을 적용하고 `Provider`를 생성한다.
 
+#### oidc-config.service.ts
 configs 폴더 아래에 정의한 `oidc-config.service.ts`에 oidc 관련 설정과 주입받을 모델들을 선택하는 함수 등을 구현 해 뒀다.
 
 ![oidc-config.service.ts](https://i.imgur.com/zVqLsde.png)
@@ -393,6 +397,7 @@ configs 폴더 아래에 정의한 `oidc-config.service.ts`에 oidc 관련 설�
   ) {}
 ```
 
+#### getModel
 `getModel` 함수는 `Adapter`에 전달 할 `name`값에 따라 어떤 모델을 가져올지 선택하는 기능을 한다.
 
 ```ts
@@ -428,9 +433,11 @@ configs 폴더 아래에 정의한 `oidc-config.service.ts`에 oidc 관련 설�
   }
 ```
 
+#### getConfigureation
 `getConfigurations` 함수는 이외의 인증서버 관련 설정 값들을 정의하고 관리하는 함수이다. 이후 입맛에 맞게 어떤 기능을 변경하고 싶거나 추가하고 싶다면 대부분 여기 설정을 만지게 될 것.
 설정값들은 기존 js 버전과 별반 차이가 없다.
 
+#### createAdapterFactory
 마지막으로 `createAdapterFactory` 함수이다.
 
 ```ts
@@ -449,11 +456,12 @@ configs 폴더 아래에 정의한 `oidc-config.service.ts`에 oidc 관련 설�
 
 이렇게 Constructor 또는 Factory 를 받을 수 있는데, 우리는 Factory 형식으로 만들어줄거다.
 
----
+
+#### Controller
 
 이렇게 애써 만든 oidc 모듈을 `Controller`에 붙이면 끝.
 
-```ts
+```typescript
 // import 생략..
 
 @Controller()
@@ -510,6 +518,7 @@ export class OidcController {
 }
 ```
 
+#### 환경 설정 파일
 ```env
 NODE_ENV=
 AUTH_URL=
@@ -524,9 +533,7 @@ MONGODB_UNIFIEDTOPOLOGY=
 
 ENV 항목들에 값을 채워넣고 테스트를 해보면 된다.
 
----
-
-# 끝
+## 끝
 
 interaction 이나 view 등 설명하자면 긴 부분들이 있지만 이전 포스트에서 작성 하기도 했고, 코드를 보는게 이해가 더 빠르기 떄문에 굳이 언급하지 않았다.
 
@@ -543,8 +550,7 @@ interaction 이나 view 등 설명하자면 긴 부분들이 있지만 이전 �
 요즘은 `Typescript` 가 대세이기도 하고, Nest가 뜨고있기도 해서 한번 바꿔봤다.
 사실 인증서버 하나만 만드는데 Nest까지는 좀 과한것 같기도 하다. 그냥 express로 가볍고 빠르게 만드는게 좋은듯
 
-아 그리고 항상 강조하지만 정확한 정보는 언제나 해당 패키지의 git [https://github.com/panva/node-oidc-provider](https://github.com/panva/node-oidc-provider) 여기를 참고하자.
+> 정확한 정보는 언제나 해당 패키지의 git [https://github.com/panva/node-oidc-provider](https://github.com/panva/node-oidc-provider) 여기를 참고하자.
+{: .prompt-warning }
 
 프런트 개발자가 왜 인증서버를 만지고있는지는 나도 모르겠지만 ㅋㅋ 언제나 삽질하다 결국 성공했을때의 느낌은 달콤하다.
-
-## 다들 화이팅!
