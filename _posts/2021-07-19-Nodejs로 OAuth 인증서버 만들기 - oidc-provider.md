@@ -27,7 +27,8 @@ category : [Backend, 인증서버]
 
 귀찮다면 그냥 풀 땡겨서 `yarn install ⇒ yarn start` 하면 실행된다.
 
-아 기본세팅 그대로 실행 시키려면 로컬에 redis-server 가 설치되어 있어야한다.
+> 기본세팅 그대로 실행 시키려면 로컬에 redis-server 가 설치되어 있어야한다.
+{: .prompt-warning }
 
 우선 `OAuth` 와 `OpenID` 에 대한 개념부터 간단하게 시작하여, 끝까지 따라온다면 그럴싸 한 인증서버 구현을 마치는 것이 목표다.
 
