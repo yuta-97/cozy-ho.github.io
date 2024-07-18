@@ -1,13 +1,12 @@
 ---
 layout : post
-title : Electron 과 Next의 궁합은 좋지않다
+title : Electron 과 Nextjs
+description: Electron 과 Next의 궁합은 좋지 않다
 date : 2024-07-17 10:59:23
 tags :
-- Electron
-- Nextjs
-- electron-builder
-- electron 추천
-category: Frontend
+- electron
+- nextjs
+category: [Frontend]
 ---
 
 # Intro
@@ -17,6 +16,7 @@ Electron 으로 만들어보고 싶은 것이 생겨서 사용할 기술들을 �
 처음 생각한 기술스택은 다음과 같다.
 
 > Next.js + Electron + Typescript
+{: .prompt-info }
 
 가장 친근하기도 하고 자주 사용하던 프레임워크들이라 선택했다.
 
@@ -27,8 +27,9 @@ Electron 프로세스 따로, 로컬에서 도는 Next 따로 실행 시켰을 �
 ![image](https://github.com/user-attachments/assets/a519437a-7076-43e6-bbdb-ea8ba4cd7abb)
 > 뭐야 내 화면 돌려줘요
 
+# 의문점
 
-# Electron 문제인가?
+## Electron 문제인가?
 `next.config.js`에 설정한 항목은 다음과 같다.
 ```javascript
 /** @type {import('next').NextConfig} */
@@ -68,7 +69,7 @@ npx @electron/asar extract <asar 파일 경로> ./test
 
 파일은 문제가 없었다. 그렇다면 대체 뭐가 문제일까?
 
-# 원인
+## 원인을 찾다
 개발 환경에서는 `https://localhost:port`형식으로 넘겨주겠지만, 배포환경에서는 빌드된 결과의 index.html 파일을 넘겨준다.
 
 위에 첨부한 소스인 Next에서 빌드한 결과 index.html 파일을 보면 파일 경로가 모두 `/_next/`로 시작한다는 걸 알 수 있다. 패키지 된 앱에서의 절대경로를 인식하지 못하는 문제였다.
@@ -95,29 +96,30 @@ npx @electron/asar extract <asar 파일 경로> ./test
 ![image](https://github.com/user-attachments/assets/953d03bf-8242-43d9-9726-e9a2a90499d2)
 > 잘 나오긴 하네..
 
-아 참고로 static export 로 빌드한 결과물에서는 Next 서버가 없기 때문에 서버사이드의 기능들은 사용 할 수 없다. 그래서 위의 이미지에서도 Next/Image 가 제대로 보이지 않는 것.
+> static export 로 빌드한 결과물에서는 Next 서버가 없기 때문에 서버사이드의 기능들은 사용 할 수 없다. 그래서 위의 이미지에서도 Next/Image 가 제대로 보이지 않는 것.
+{: .prompt-info }
 
-# 이게맞나?
+## 이게맞나?
 아무리 생각해도 임시방편에 불과한 이런 방법이 마음에 들지 않았다. 역시 프레임워크를 사용하면 편한만큼 자유도는 줄어드는구나.. 대체 왜 `assetPrefix`에 상대경로를 설정하지 못하도록 변경한걸까..
 
 경로문제를 깔끔하게 해결하려면 renderer 프로세스도 Node 위에서 돌리면 된다. 그런데 Electron 도 node 런타임에서 돌아가는데 Next를 실행시키기 위해 불필요한 node 프로세스가 추가 된다. 빌드된 앱의 크기가 너무 커지기도 하고, 속도도 느릴 것이 뻔했다.
 
 Next의 장점은 web 환경에서의 퍼포먼스이지 (cache, ssr ..) 이게 로컬에서 도는 native-app 에서는 의미없다 라는 생각이 들었고, 굳이 Next를 고집할 이유가 있을까? 하는 고민에 이르렀다.
 
-# 결국..
+# 해결? 결론
 그냥 기본 React 를 사용하기로 했다. 내가 만드려는 앱의 기능과 동작이 중요하지, 그걸 만드는데 필요한 도구들이 일으키는 문제들에 집중하고 싶지 않았다.
 
 Electron 앱을 만들 때 생각보다 Electron 자체 설정과 패키징을 위한 electron-builder 관련 설정 등 자잘하게 신경써야 할 부분들이 많다. 뭐 하나 잘못되면 익숙하지 않은 탓에 디버깅 하기 쉽지 않기도 하고, 빠른 속도감이 없으면 금새 흥미가 떨어져 흐지부지 되어 버리는게 싫었다.
 
 그래서 사용한 scaffold
-```shell
+```console
 pnpm create @quick-start/electron . --template react-ts
 ```
 
 `Electron`, `React.js`, `Typescript` 스택으로 완벽하게 기본 세팅을 해준다. 우리는 이제 무엇을 만들 것인가에 집중하면 된다.
 > 속이 뻥..!
 
-# 여담
+# Outro
 Next 로 패키징 했을떄는 앱의 크기가 약 650MB 정도였지만 vite + react 가 확실히 가볍긴 한가보다. 크기가 250MB 로 거의 1/3 크기로 줄었다.
 
 처음에 직접 만들었을 때의 디렉토리 구조와 다른 점들이 있다. 물론 이것도 모범 답안은 아니지만 구조를 잡아둔 방식을 보면서 배운것들도 있었다.

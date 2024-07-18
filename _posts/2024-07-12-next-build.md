@@ -3,9 +3,8 @@ layout : post
 title : Next build의 결과물
 date : 2024-07-12 10:59:23
 tags :
-- Nextjs
-- next build
-category: Frontend
+- nextjs
+category: [Frontend, nextjs]
 ---
 
 # Intro
