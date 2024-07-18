@@ -542,6 +542,7 @@ interaction 이나 view 등 설명하자면 긴 부분들이 있지만 이전 �
 나는 개인적으로 auth-code 는 `auth-code string`을 만들어서
 
 > https://localhost:8888/auth?client_id=auth_test&response_type=code&redirect_uri=https://localhost:3000/auth&scope=openid+profile+hospitalInfo&code_challenge=CUZX5qE8Wvye6kS_SasIsa8MMxacJftmWdsIA_iKp3I&code_challenge_method=S256
+{: .prompt-info }
 
 이런식으로 접근하면 로그인 페이지가 뜨고 그 이후 스텝들을 진행 해보고,
 
