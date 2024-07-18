@@ -46,7 +46,7 @@ category : [Backend, 인증서버]
 ### OAuth 2.0 의 정의부터 알아보자
 
 > 제 3의 앱이 자원의 소유자인 서비스 이용자를 대신하여 서비스를 요청할 수 있도록 자원 접근 권한을 위임하는 방법
-
+{: .prompt-info }
 _출처 : 금융보안원_
 
 말그대로 제3의 앱에 내 데이터의 접근권한을 위임하는 것.
@@ -66,7 +66,7 @@ _출처 : 금융보안원_
 마찬가지로 정의부터 알아보면,
 
 > 오픈아이디(OpenID)는 비영리 재단인 OpenID 재단(OpenID Foundation)에서 관리하는 인증 수단이다. 오픈아이디는 분산형 디지털 정체성 시스템으로 모든 사용자들의 온라인 정체성이 URL로 주어지거나(블로그나 홈페이지처럼) 최근의 버전에서는 XRI로 주어지며 이 프로토콜을 지원하는 어떤 서버를 통해서나 인증될 수 있다
-
+{: .prompt-info }
 _출처 : wikipedia_
 
 OAuth 보다 이해하기 어렵다.
@@ -714,7 +714,7 @@ export { initAccount, findAccount, checkAccount };
 
 #### views
 
-```ejs
+```html
 <div class="login-client-image">
   <% if (client.logoUri) { %><img src="<%= client.logoUri %>"><% } %>
 </div>
@@ -772,7 +772,7 @@ export { initAccount, findAccount, checkAccount };
 {: file='interaction.ejs'}
 
 
-```jsx
+```html
 <% if (locals.google) { %>
 <form autocomplete="off" action="/interaction/<%= uid %>/federated" method="post">
   <input type="hidden" name="upstream" value="google">
@@ -810,7 +810,7 @@ provider를 생성하기전에 설정값들을 지정해 두고 mounting 한다.
 
 내가 사용한 config기준으로 각 필드들이 무엇을 의미하는지 찍먹 해보자.
 
-```jsx
+```js
 const configs = {
   clients, // clients.js에서 등록한, 인증서버를 사용하게 될 client들의 정보.
   jwks: privatekeys, // key 발급에 사용될 비대칭 암호키
@@ -945,7 +945,7 @@ standalone.js 에서 provider를 생성하기전에 express에 interaction route
 
 auth-code 인증방식 프로세스에서 사용자에게 로그인 창과 권한 허가를 받을 때 사용하는 endpoint이다.
 
-```jsx
+```js
 app.get("/interaction/:uid", setNoCache, async (req, res, next) => {
   try {
     const { uid, prompt, params, session } = await provider.interactionDetails(req, res);
