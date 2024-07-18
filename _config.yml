@@ -16,10 +16,13 @@ timezone: Asia/Seoul
 
 title: Dev-ing # the main title
 
-tagline: 당신은 겉보기에 노력하고 있을뿐 # it will display as the subtitle
+tagline: >- # it will display as the subtitle
+  Typescript, Nextjs, GraphQL, Apollo-Client 등을 주로 사용합니다.
+  좋은 동료와 좋은 문화에 대한 갈증이 있습니다.
+  함께 재미난 것들을 만들어 보고 싶어요.
 
 description: >- # used by seo meta and the atom feed
-  당신은 겉보기에 노력하고 있을뿐
+  당신은 겉보기에 노력하고 있을 뿐.
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
