@@ -1,14 +1,12 @@
 ---
 layout: post
-title: Nestjs로 OAuth 인증서버 만들기 (oidc-provider)
+title: Nestjs로 OAuth 인증서버 만들기
+description: oidc-provider 와 Nest를 활용해 OAuth 인증을 담당하는 인증서버를 만들어 보자.
 date: 2023-08-07 14:23:23
-tags:
-  - OAuth
-  - 인증서버
-  - oidc-provider
-  - nodejs
-  - typescript
-category: Server
+tags :
+- 인증서버
+- oidc-provider
+category : [Backend, 인증서버]
 ---
 
 > 해당 글은 이전에 작성했던 포스트 <a href="https://cozy-ho.github.io/server/2021/07/19/Nodejs%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider.html" target="_blank">Node.js로 OAuth 인증서버 만들기</a> 에 의존합니다.

@@ -1,21 +1,20 @@
 ---
 layout : post
-title : OAuth 인증서버 만들기 with(oidc-provider)
+title : Nodejs 인증서버 만들기
+description: node-oidc-provider 를 express 위에서 구현 해 보자.
 date : 2021-07-19 14:42:23
 tags :
-- OAuth
 - 인증서버
 - oidc-provider
-- nodejs
-category : Server
+category : [Backend, 인증서버]
 ---
 
 > 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://cozy-ho.github.io/server/2023/08/07/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider.html) 를 작성했으니 확인 해 보자 
+{: .prompt-info }
 
 ---
 
-# Intro
-<br>
+## Intro
 `OAuth` 인증과 `OpenID Connect` 에 관해 정리 하고 기본 개념을 확실하게 함과 동시에, 국내에 통합로그인 서비스를 끌어다 이용하는 샘플은 넘쳐나는 반면에 `OAuth` 서버를 직접 구현하는 예제는 찾아보기 힘들어, RFC 문서를 뒤져가며 삽질한 2달간의 수고로움을 다른사람들은 최대한 피해갔으면 하는 마음에 정리를 시작한다.
 
 이번 포스팅에서는 `node-oidc-provider` 라는 오픈소스 프로젝트를 사용하여 인증서버를 구현한다.
@@ -32,21 +31,18 @@ category : Server
 
 우선 `OAuth` 와 `OpenID` 에 대한 개념부터 간단하게 시작하여, 끝까지 따라온다면 그럴싸 한 인증서버 구현을 마치는 것이 목표다.
 
-사용 할 기술 스택은 다음과 같다.
+사용 할 기술 스택과 버전은 다음과 같다.
+> 1. Node.js -v14.15.0
+> 2. OIDC-Provider -v6.29.5
+> 3. Redis, mongoDB, dynamoDB
+> 4. OAuth 2.0
+> 5. OpenID Connect
+{: .prompt-info }
 
-1. Node.js -v14.15.0
-2. OIDC-Provider -v6.29.5
-3. Redis, mongoDB, dynamoDB
-4. OAuth 2.0
-5. OpenID Connect
 
-대충 이정도이고, 개발과 아무 관련없는 일반인이 이런 글을 보고 있지는 않을테니 독자는 기본적으로 `개발자` 라고 가정하겠다.
+## 시작하기 전에
 
----
-
-# 시작
-
-OAuth 2.0 의 정의부터 알아보자
+### OAuth 2.0 의 정의부터 알아보자
 
 > 제 3의 앱이 자원의 소유자인 서비스 이용자를 대신하여 서비스를 요청할 수 있도록 자원 접근 권한을 위임하는 방법
 
@@ -64,9 +60,7 @@ _출처 : 금융보안원_
 
 여기까지가 OAuth의 기본 흐름과 개념 끝.
 
----
-
-다음은 OpenID로 넘어가 보자.
+### 다음은 OpenID
 
 마찬가지로 정의부터 알아보면,
 
@@ -88,13 +82,13 @@ OAuth를 이용하여 사용자를 인증하는 과정을 `OAuth Dance` 라고 �
 
 ---
 
-# 사전지식
+## 배경지식
 
 인증서버를 구현하는데 필수로 알아야 할 사전지식이다.
 
 인증 종류와 토큰 종류 등등..
 
-## Background
+### Background
 
 third party Application 에 계정정보(ID, PW)를 제공하고 싶지 않은 요구가 첫번쨰 이다.
 
@@ -111,21 +105,21 @@ third party Application 에 계정정보(ID, PW)를 제공하고 싶지 않은 �
 
 ### Oauth 2.0
 
-### 달라진 점
+#### 달라진 점
 
 - https가 필수.
 - 암호화는 https에 맡긴다.
 - 1.0a 는 인증방식이 한가지 였지만 다양한 인증방식을 제공한다.
 - api 서버에서 인증서버를 분리 할 수 있도록 해 놓았다.
 
-### 구성
+#### 구성
 
 - Resource owner : 사용자
 - Client : Resource server 에서 제공하는 자원을 사용하는 어플리케이션
 - Resource server : 자원을 호스팅하는 서버
 - Authorization Server : 인증서버, 일반적으로 Resource server 의 하위 도메인에 있는 경우가 많음
 
-## 인증종류
+### 인증종류
 
 Oauth 2.0 의 인증종류는 4가지가 있다.
 
@@ -134,7 +128,7 @@ Oauth 2.0 의 인증종류는 4가지가 있다.
 - Client Credentials Grant
 - Resource Owner Password Credentials Grant
 
-### Authorization code grant
+#### Authorization code grant
 
 서버사이드 코드로 인증하는 방식
 
@@ -177,7 +171,7 @@ Access token을 바로 클라이언트로 전달하지 않아 잠재적 유출�
                      Figure 3: Authorization Code Flow
 ```
 
-### Implicit grant
+#### Implicit grant
 
 token과 scope에 대한 스펙등은 다르지만 oauth 1.0a와 가장 비슷한 방식이다
 
@@ -231,7 +225,7 @@ Oauth 2.0에서 가장 많이 사용되는 방식이다
                        Figure 4: Implicit Grant Flow
 ```
 
-### Client credentials grant
+#### Client credentials grant
 
 어플리케이션이 confidential client ( 인증된, 신뢰할 수 있는 클라이언트 )인 경우 id, secret을 가지고 인증하는 방식
 
@@ -249,7 +243,7 @@ Oauth 2.0에서 가장 많이 사용되는 방식이다
                      Figure 6: Client Credentials Flow
 ```
 
-### Password credentials grant
+#### Password credentials grant
 
 Client에 ID/PW를 저장해 놓고 ID/PW로 직접 access token을 받아오는 방식이다
 
@@ -279,9 +273,9 @@ API서비스의 공식 어플리케이션이나 믿을 수 있는 Client에 한�
             Figure 5: Resource Owner Password Credentials Flow
 ```
 
-## Token
+### Token
 
-### Access Token
+#### Access Token
 
 위의 4가지 권한 요청 방식 모두, 요청 절차를 정상적으로 마치면 클라이언트에게 Access Token이 발급된다. 이 토큰은 보호된 리소스에 접근 할 때 권한 확인용으로 사용된다.
 
@@ -307,7 +301,7 @@ API서비스의 공식 어플리케이션이나 믿을 수 있는 Client에 한�
                      Figure 1: Abstract Protocol Flow
 ```
 
-### Refresh Token
+#### Refresh Token
 
 Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는데 그때 사용되는 토큰이다. Access token과 같은 형식이며 1회성으로 한번 사용하면 만료된다
 
@@ -336,13 +330,13 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
                Figure 2: Refreshing an Expired Access Token
 ```
 
+### 인증과정
 - 마지막으로 OAuth 인증과정을 한번 훑고 바로 구현 시작해보자.
 
-### 인증과정
 
 ![img01](https://github.com/Cozy-Ho/Cozy-Ho.github.io/blob/master/images/_post-21-07-19-01.png?raw=true)
 
-### 인증 프로세스
+#### 인증 프로세스
 
 ![img02](https://github.com/Cozy-Ho/Cozy-Ho.github.io/blob/master/images/_post-21-07-19-02.png?raw=true)
 
@@ -352,11 +346,9 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
 
 ---
 
-# 구현
+## 구현
 
 기본 Node 프로젝트를 시작하듯이 진행하면 된다.
-
-> .babelrc
 
 ```jsx
 {
@@ -364,6 +356,7 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
   "plugins": ["@babel/plugin-transform-runtime"]
 }
 ```
+{: file='.babelrc'}
 
 `CommonJS` 와 `ES6` 문법을 혼용하기 때문에 babelrc 설정을 추가 해주자.
 
@@ -390,9 +383,7 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
    2. oidc-provider에서 기본으로 제공해주는 ejs를 그대로 사용했다.
    3. 해당 UI도 사용자 입맛에따라 Custom이 가능하다.
 
----
-
-> standalone.js
+### 파일 별 설명
 
 ```jsx
 import * as dotenv from "dotenv";
@@ -436,6 +427,7 @@ app.listen(3000, () => {
   console.log("oidc-provider listening on port 3000, check https://localhost:3000/.well-known/openid-configuration");
 });
 ```
+{: file='standalone.js'}
 
 기본 설정이다. express 모듈을 사용하여 oidc-provider를 Mounting 했다.
 
@@ -445,9 +437,7 @@ app.listen(3000, () => {
 
 다음은 기본 설정값들을 기준으로 각 디렉토리별 파일들의 내용이다. 그대로 복사해서 사용해도 문제없지만 코드를 나름 분석하고 사용하는걸 추천한다.
 
-## Adapters
-
-> redis.js
+#### Adapters
 
 ```jsx
 // npm i ioredis@^4.0.0
@@ -566,12 +556,11 @@ class RedisAdapter {
 
 module.exports = RedisAdapter;
 ```
+{: file='redis.js'}
 
 mongoDB, dynamoDB 등도 사용이 가능하다.
 
-## Configs
-
-> clients.js
+#### Configs
 
 ```jsx
 export const clients = [
@@ -603,12 +592,11 @@ export const clients = [
   },
 ];
 ```
+{: file='clients.js'}
 
 인증서버에 등록하여 사용할 Client의 정보를 저장한다. Client별로 인증방식, 제공할 정보 등이 다르다.
 
-## Database
-
-> memorydb.js
+#### Database
 
 ```jsx
 const low = require("lowdb");
@@ -651,12 +639,11 @@ class MemoryDB {
 
 module.exports = MemoryDB;
 ```
+{: file='memorydb.js'}
 
 lowdb를 사용한 가장 간단한 db 구현. 사용자 정보 검색.
 
-## Supports
-
-> account.js
+#### Supports
 
 ```jsx
 import crypto from "crypto";
@@ -720,14 +707,13 @@ const checkAccount = async (loginId, password) => {
 
 export { initAccount, findAccount, checkAccount };
 ```
+{: file='account.js'}
 
 위의 memorydb.js와 동일하게 mongoDB, dynamoDB 모두 getUser, getUserById 함수만 API로 맞춰서 구현하면 env설정값에따라 다르게 적용 가능하다.
 
-## views
+#### views
 
-> interaction.ejs
-
-```jsx
+```ejs
 <div class="login-client-image">
   <% if (client.logoUri) { %><img src="<%= client.logoUri %>"><% } %>
 </div>
@@ -782,8 +768,8 @@ export { initAccount, findAccount, checkAccount };
   <button autofocus type="submit" class="login login-submit">Continue</button>
 </form>
 ```
+{: file='interaction.ejs'}
 
-> login.ejs
 
 ```jsx
 <% if (locals.google) { %>
@@ -807,24 +793,21 @@ export { initAccount, findAccount, checkAccount };
   <button type="submit" class="login login-submit">Sign-in</button>
 </form>
 ```
+{: file='login.ejs'}
 
 UI 구현부.
 
 Login 로직이 다르다면 ( email 정보까지 로그인에 필요하다 등등.. ) 해당 코드를 수정해서 사용하면 된다.
 
----
-
-# Configuration
+### Configuration
 
 가장 중요한 부분이라 섹션을 따로 뺐다.
 
 provider를 생성하기전에 설정값들을 지정해 두고 mounting 한다. 직접 해보지않으면 뭐하는 설정인지 감조차 오지않는 것들이 많기 때문에 ...
 
-- 사실 해당 git documentation을 정독해도 이해가 가지 않는 부분들 투성이 인데다가 해당레포 마스터가 그닥 친절한 타입이 아니라 Issue에 response 달린것들도 대부분 - 내 코드는 문제없으니 너가 설정을 잘못한거야 - 라는 태도.. 모르겠는 설정들은 RFC 문서를 뒤져보면 자세하게 설명 되어있다.
+> 사실 해당 git documentation을 정독해도 이해가 가지 않는 부분들 투성이 인데다가 해당레포 마스터가 그닥 친절한 타입이 아니라 Issue에 response 달린것들도 대부분 - 내 코드는 문제없으니 너가 설정을 잘못한거야 - 라는 태도.. 모르겠는 설정들은 RFC 문서를 뒤져보면 자세하게 설명 되어있다.
 
 내가 사용한 config기준으로 각 필드들이 무엇을 의미하는지 찍먹 해보자.
-
-> standalone.js
 
 ```jsx
 const configs = {
@@ -951,18 +934,15 @@ const configs = {
   },
 };
 ```
+{: file='standalone.js'}
 
 처음보면 어지러울수도 있지만 하나하나 찬찬히 테스트 해 보면 감이 온다.
 
----
-
-## Interaction
+#### Interaction
 
 standalone.js 에서 provider를 생성하기전에 express에 interaction route를 달아주자.
 
 auth-code 인증방식 프로세스에서 사용자에게 로그인 창과 권한 허가를 받을 때 사용하는 endpoint이다.
-
-> standalone.js
 
 ```jsx
 app.get("/interaction/:uid", setNoCache, async (req, res, next) => {
@@ -1092,8 +1072,8 @@ app.get("/interaction/:uid/abort", setNoCache, async (req, res, next) => {
   }
 });
 ```
+{: file='standalone.js'}
 
----
 
 # 끝
 
