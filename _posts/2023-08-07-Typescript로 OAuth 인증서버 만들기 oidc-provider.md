@@ -9,8 +9,8 @@ tags :
 category : [Backend, 인증서버]
 ---
 
-> 해당 글은 이전에 작성했던 포스트 <a href="https://cozy-ho.github.io/server/2021/07/19/Nodejs%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider.html" target="_blank">Node.js로 OAuth 인증서버 만들기</a> 에 의존합니다.
-{: .prompt-warning }
+> 해당 글은 이전에 작성했던 포스트 [Node.js로 OAuth 인증서버 만들기](https://cozy-ho.github.io/posts/Nodejs%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 에 의존합니다.
+{: .prompt-info }
 
 ## Intro
 기본적인 개념 및 구조는 해당 포스트를 참고 하도록 하고, 여기에는 `typescript` 그리고 `Nest.js`를 사용해서 구현하는 것을 목표로 잡았다.

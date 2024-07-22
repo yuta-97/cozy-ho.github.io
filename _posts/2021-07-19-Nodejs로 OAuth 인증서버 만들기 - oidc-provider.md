@@ -9,7 +9,7 @@ tags :
 category : [Backend, 인증서버]
 ---
 
-> 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://cozy-ho.github.io/server/2023/08/07/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider.html) 를 작성했으니 확인 해 보자 
+> 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://cozy-ho.github.io/posts/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 를 작성했으니 확인 해 보자 
 {: .prompt-info }
 
 ---
