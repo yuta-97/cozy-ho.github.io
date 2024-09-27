@@ -111,7 +111,7 @@ comments:
   # The provider options are as follows:
   # utterances settings › https://utteranc.es/
   utterances:
-    repo: yuta-97/yuta-97.github.io # <gh-username>/<repo>
+    repo: yuta-97/cozy-ho.github.io # <gh-username>/<repo>
     issue_term: title # < url | pathname | title | ...>
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
