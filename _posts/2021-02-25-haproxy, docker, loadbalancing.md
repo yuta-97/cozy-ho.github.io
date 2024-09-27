@@ -11,7 +11,7 @@ category: Server
 
 Docker를 통한 Loadbalancing은 사실 구글에서 만든 `Kubernetes` 라는 좋은 오픈소스가 있다. 하지만 LearningCurve 가 가파르고 진입장벽이 높아 입문자라면 시도해 보기 어렵기때문에 `HAProxy`와 Docker에서 기본으로 지원하는 `docker-swarm`을 사용했다. 만약 학습용이 아닌 실제 필드에 적용하려 한다면, `Kubernetes`를 추천한다.<br>
 `HAProxy`는 Reverse Proxy 로 동작한다. client로 부터 들어오는 요청을 server로 전달해주는 역할을 한다. 보통 Reverse Proxy는 기업에서 서버 보안을 위해 사용하지만 우리는 loadbalance를 구현하기위해 사용한다.<br>
-실습에 사용되는 코드와 예제는 <a href="https://github.com/Cozy-Ho/docker_practice/tree/main/haproxy_loadbalancing" target="_balnk">여기</a>에 올려두었다.
+실습에 사용되는 코드와 예제는 <a href="https://github.com/yuta-97/docker_practice/tree/main/haproxy_loadbalancing" target="_balnk">여기</a>에 올려두었다.
 
 ## Haproxy + Docker 로 Loadbalancing 하기
 

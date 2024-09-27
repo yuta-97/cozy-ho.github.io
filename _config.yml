@@ -26,10 +26,10 @@ description: >- # used by seo meta and the atom feed
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://cozy-ho.github.io"
+url: "https://yuta-97.github.io"
 
 github:
-  username: cozy-ho # change to your GitHub username
+  username: yuta-97 # change to your GitHub username
 
 social:
   # Change to your full name.
@@ -38,7 +38,7 @@ social:
   email: kj2693119@gmail.com # change to your email address
   links:
     # The first element serves as the copyright owner's link
-    - https://github.com/cozy-ho # change to your GitHub homepage
+    - https://github.com/yuta-97 # change to your GitHub homepage
     # Uncomment below to add more social links
     # - https://www.facebook.com/username
     # - https://www.linkedin.com/in/username
@@ -111,7 +111,7 @@ comments:
   # The provider options are as follows:
   # utterances settings › https://utteranc.es/
   utterances:
-    repo: cozy-ho/cozy-ho.github.io # <gh-username>/<repo>
+    repo: yuta-97/yuta-97.github.io # <gh-username>/<repo>
     issue_term: title # < url | pathname | title | ...>
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets

@@ -9,7 +9,7 @@ tags :
 category : [Backend, 인증서버]
 ---
 
-> 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://cozy-ho.github.io/posts/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 를 작성했으니 확인 해 보자 
+> 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://yuta-97.github.io/posts/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 를 작성했으니 확인 해 보자 
 {: .prompt-tip }
 
 ---
@@ -23,7 +23,7 @@ category : [Backend, 인증서버]
 
 최대한 이해하기 쉽게 설명 하겠지만 잘 모르겠다면 해당 git을 보고 직접 찾아보면 된다.
 
-본 포스팅을 그대로 따라하다가 문제가 발생했다면, [여기](https://github.com/Cozy-Ho/oidc-provider)를 참고하자.
+본 포스팅을 그대로 따라하다가 문제가 발생했다면, [여기](https://github.com/yuta-97/oidc-provider)를 참고하자.
 
 귀찮다면 그냥 풀 땡겨서 `yarn install ⇒ yarn start` 하면 실행된다.
 
@@ -335,11 +335,11 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
 - 마지막으로 OAuth 인증과정을 한번 훑고 바로 구현 시작해보자.
 
 
-![img01](https://github.com/Cozy-Ho/Cozy-Ho.github.io/blob/master/images/_post-21-07-19-01.png?raw=true)
+![img01](https://github.com/yuta-97/yuta-97.github.io/blob/master/images/_post-21-07-19-01.png?raw=true)
 
 #### 인증 프로세스
 
-![img02](https://github.com/Cozy-Ho/Cozy-Ho.github.io/blob/master/images/_post-21-07-19-02.png?raw=true)
+![img02](https://github.com/yuta-97/yuta-97.github.io/blob/master/images/_post-21-07-19-02.png?raw=true)
 
 출처 : [Payco 개발자센터](https://developers.payco.com/guide/development/start)
 
@@ -365,7 +365,7 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
 
 개발자마다 다르기때문에 적절히 참고만 하면 되겠다.
 
-![img03](https://github.com/Cozy-Ho/Cozy-Ho.github.io/blob/master/images/_post-21-07-19-03.png?raw=true)
+![img03](https://github.com/yuta-97/yuta-97.github.io/blob/master/images/_post-21-07-19-03.png?raw=true)
 
 1. standalone.js 또는 serverless.js 로 구동한다.
 2. adapters
@@ -1082,7 +1082,7 @@ app.get("/interaction/:uid/abort", setNoCache, async (req, res, next) => {
 
 정확한 코드 및 설명은 [https://github.com/panva/node-oidc-provider](https://github.com/panva/node-oidc-provider) 여기를 참고하고,
 
-본 포스팅은 [https://github.com/Cozy-Ho/oidc-provider](https://github.com/Cozy-Ho/oidc-provider) 여기를 참고하자. 해당 Repo를 clone해 와서 `yarn install` 후 `yarn start`하면 실행된다.
+본 포스팅은 [https://github.com/yuta-97/oidc-provider](https://github.com/yuta-97/oidc-provider) 여기를 참고하자. 해당 Repo를 clone해 와서 `yarn install` 후 `yarn start`하면 실행된다.
 
 서버는 기본 `8888`포트에서 돌고있고, 해당 인증서버에 요청을 보내는 client는 postman으로 해도 가능은 하지만, `Auth-code`인증방식은 테스트하기 복잡하기때문에 웬만하면 따로 만들어서 테스트 하는게 좋다. 구현 해 놓은 테스트용 client도 추가할까 했지만 테스트용 코드라 깔끔하지도 않고 양도 꽤 많아서 생략했다. 혹시 필요한 사람이 있다면 따로 공유하는걸로하고..
 
