@@ -44,13 +44,13 @@ sudo apt-get install tvheadend
 ## 기본 설정
 설치 후 `설치 IP:9981`에 접속하면 다음과 같은 웹 설정 페이지가 나온다.
 
-![img1](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-01.png?raw=true)
+![img1](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-01.png?raw=true)
 
 언어설정이다. `EPG Language` 에서 `Language 1:` 을 한국어로, 나머지는 영어로 하면된다.
 
 언어를 바꾸고 이 창이 또 뜰 수 있는데 그냥 `Next`클릭하면 된다.
 
-![img2](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-02.png?raw=true)
+![img2](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-02.png?raw=true)
 
 관리자 설정 및 접속 설정 페이지다.
 
@@ -58,7 +58,7 @@ sudo apt-get install tvheadend
 
 다음은 로그인시 필요한 관리자 ID&PW. 입력후 Next.
 
-![img3](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-03.png?raw=true)
+![img3](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-03.png?raw=true)
 
 그 뒤로는 아무설정도 하지말고 그냥 쭉 Next, Next 하고 완료한다.
 
@@ -66,9 +66,9 @@ sudo apt-get install tvheadend
 
 다음, 설정에서 Configuration > General > base 에서 다음과같이 설정한다.
 
-![img4](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-04.png?raw=true)
+![img4](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-04.png?raw=true)
 
-![img5](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-05.png?raw=true)
+![img5](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-05.png?raw=true)
 
 Theme은 취향에 맞게 선택하면 된다.
 
@@ -78,27 +78,27 @@ Theme은 취향에 맞게 선택하면 된다.
 
 네트워크 추가를 위해 Configuration > DVB Inputs > Networks에서 `Add`버튼을 눌러준다.
 
-![img6](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-06.png?raw=true)
+![img6](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-06.png?raw=true)
 
 그리고 드롭리스트중에서 다음을 선택한다.
 
-![img7](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-07.png?raw=true)
+![img7](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-07.png?raw=true)
 
 그리고 다음과 같이 양식을 채운다.
 
 URL에는 m3u파일의 절대경로를 적어둔다.
 
-![img8](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-08.png?raw=true)
+![img8](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-08.png?raw=true)
 
-![img9](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-09.png?raw=true)
+![img9](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-09.png?raw=true)
 
 반드시 `Accept zero value for TSID` 를 체크하고 `Create`를 누르자. 누르지 않을경우 URL에 복사한 m3u파일의 경로를 file:// 뒤에 입력하므로 채널등록이 제대로 되지 않는다.
 
-![img10](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-10.png?raw=true)
+![img10](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-10.png?raw=true)
 
 Configuration > DVB Inputs > Muxes 로 이동하면 위의 이미지처럼 채널이 스캔된다.
 
-![img11](https://github.com/cozy-ho/cozy-ho.github.io/blob/master/images/_post-18-07-09-11.png?raw=true)
+![img11](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-18-07-09-11.png?raw=true)
 
 채널의 앞, 뒤 체크박스를 모두 체크하고 `Save` 버튼을 누른다.
 
