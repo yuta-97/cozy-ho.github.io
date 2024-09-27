@@ -9,7 +9,7 @@ tags :
 category : [Backend, 인증서버]
 ---
 
-> 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://cozy-ho.github.io/posts/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 를 작성했으니 확인 해 보자 
+> 만약 `Nestjs`, `Typescript` 를 사용한다면, [새로운 포스트](https://yuta-97.github.io/posts/Typescript%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 를 작성했으니 확인 해 보자 
 {: .prompt-tip }
 
 ---
@@ -335,11 +335,11 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
 - 마지막으로 OAuth 인증과정을 한번 훑고 바로 구현 시작해보자.
 
 
-![img01](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-21-07-19-01.png?raw=true)
+![img01](https://github.com/yuta-97/yuta-97.github.io/blob/master/images/_post-21-07-19-01.png?raw=true)
 
 #### 인증 프로세스
 
-![img02](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-21-07-19-02.png?raw=true)
+![img02](https://github.com/yuta-97/yuta-97.github.io/blob/master/images/_post-21-07-19-02.png?raw=true)
 
 출처 : [Payco 개발자센터](https://developers.payco.com/guide/development/start)
 
@@ -365,7 +365,7 @@ Access token의 만료시간이 지나면 새로운 토큰을 얻어야 하는�
 
 개발자마다 다르기때문에 적절히 참고만 하면 되겠다.
 
-![img03](https://github.com/yuta-97/cozy-ho.github.io/blob/master/images/_post-21-07-19-03.png?raw=true)
+![img03](https://github.com/yuta-97/yuta-97.github.io/blob/master/images/_post-21-07-19-03.png?raw=true)
 
 1. standalone.js 또는 serverless.js 로 구동한다.
 2. adapters

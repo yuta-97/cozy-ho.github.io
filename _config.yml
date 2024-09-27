@@ -26,7 +26,7 @@ description: >- # used by seo meta and the atom feed
 
 # Fill in the protocol & hostname for your site.
 # E.g. 'https://username.github.io', note that it does not end with a '/'.
-url: "https://cozy-ho.github.io"
+url: "https://yuta-97.github.io"
 
 github:
   username: yuta-97 # change to your GitHub username
@@ -111,7 +111,7 @@ comments:
   # The provider options are as follows:
   # utterances settings › https://utteranc.es/
   utterances:
-    repo: yuta-97/cozy-ho.github.io # <gh-username>/<repo>
+    repo: yuta-97/yuta-97.github.io # <gh-username>/<repo>
     issue_term: title # < url | pathname | title | ...>
 
 # Self-hosted static assets, optional › https://github.com/cotes2020/chirpy-static-assets
