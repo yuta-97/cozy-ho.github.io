@@ -9,7 +9,7 @@ tags :
 category : [Backend, 인증서버]
 ---
 
-> 해당 글은 이전에 작성했던 포스트 [Node.js로 OAuth 인증서버 만들기](https://yuta-97.github.io/posts/Nodejs%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 에 의존합니다.
+> 해당 글은 이전에 작성했던 포스트 [Node.js로 OAuth 인증서버 만들기](https://cozy-ho.github.io/posts/Nodejs%EB%A1%9C-OAuth-%EC%9D%B8%EC%A6%9D%EC%84%9C%EB%B2%84-%EB%A7%8C%EB%93%A4%EA%B8%B0-oidc-provider/) 에 의존합니다.
 {: .prompt-info }
 
 ## Intro
